@@ -9,6 +9,7 @@
         <input type="button" value="按钮" id="btn" onclick="showMessage()">
         <input type="button" value="按钮2" id="btn2">
         <input type="button" value="按钮3" id="btn3">
+        <a href="event.html" id="go">跳转</a>
     </div>    
     <script>
         // html事件
@@ -21,10 +22,16 @@
             alert('这是放按钮的盒子');
         }
 
+        function stopGoto(event){
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
         // dom 0级事件
         var btn2 = document.getElementById('btn2');
         var btn3 = document.getElementById('btn3');
         var box = document.getElementById('box');
+        var go = document.getElementById('go');
 
         btn2.onclick = function() {
             alert('这是通过DOM 0级添加的事件');
@@ -59,6 +66,8 @@
         // eventUtil.removeHandler(btn3, 'click', showMessage);
 
         eventUtil.addHandler(box, 'click', showBox);
+
+        eventUtil.addHandler(go, 'click', stopGoto);
 
     </script>
 </body>
