@@ -126,8 +126,91 @@ function showMessage(event) {
 ```
 
 
+### 3.2 IE中的事件对象
+
+#### (1) `type`属性
+用于获取事件类型
+
+#### (2) `srcElement`属性
+用于获取事件目标
+
+#### (3) `cancelBubble`属性
+设置为`true`表示阻止事件冒泡，`false`不阻止。
+
+#### (4) `returnValue`属性
+设置为`false`表示阻止事件的默认行为。
 
 
+
+### 3.3 兼容DOM与IE的封装处理
+```javascript
+var eventUtil = {
+    // 添加句柄
+    addHandler: function(element, type, handler) {
+        if (element.addEventListener) {
+            element.addEventListener(type, handler, false);
+        } else if (element.attachEvent) {
+            element.attachEvent('on' + type, handler);
+        } else {
+            element['on' + type] = handler;
+        }
+    },
+    // 删除句柄
+    removeHandler: function(element, type, handler) {
+        if (element.removeEventListener) {
+            element.removeEventListener(type, handler, false);
+        } else if (element.detachEvent) {
+            element.detachEvent('on' + type, handler);
+        } else {
+            element['on' + type] = null;
+        }
+    },
+    // 获取事件
+    getEvent: function(event) {
+        return event ? event : windown.event;
+    },
+    // 获取事件的类型
+    getType: function(event){
+        return event.type;
+    },
+    // 获取事件的元素
+    getElement: function(event){
+        return event.target || event.srcElement;
+    },
+    // 阻止事件的默认行为
+    preventDefault: function(event) {
+        if (event.preventDefault) {
+            event.preventDefault();
+        } else {
+            event.returnValue = false;
+        }
+    },
+    // 阻止事件冒泡
+    stopPropagation: function(event) {
+        if (event.stopPropagation) {
+            event.stopPropagation();
+        } else {
+            event.cancelBubble=true;
+        }
+    }
+}
+```
+
+
+## 4. QQ面板拖拽效果
+
+### 4.1 步骤
+* 在标题区域按下
+* 在页面中移动
+* 释放鼠标时停止移动
+
+鼠标的两个视口中的位置信息（不包括页面滚动距离）：
+```
+clientX
+clientY
+```
+
+`mousemove`当鼠标指针在元素内部移动时重复地触发。
 
 
 

@@ -14,6 +14,9 @@
     <script>
         // html事件
         function showMessage(event) {
+            event = event || window.event;
+            var ele = event.target || event.srcElement;     // 后者是IE的兼容性考虑
+            alert(ele);
             alert(event.target.nodeName);
             event.stopPropagation();
         }
