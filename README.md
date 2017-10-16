@@ -96,7 +96,7 @@ eventUtil.addHandler(btn3, 'click', showMessage);
 
 ### 3.1 DOM中的事件对象
 
-#### type属性
+#### `type`属性
 
 用于获取事件类型
 
@@ -107,8 +107,17 @@ function showMessage(event) {
 ```
 点击可以显示 `click`
 
-#### target属性
+#### `target`属性
 用于获取事件目标
+
+#### `stopPropagation()`方法
+阻止事件冒泡
+```javascript
+function showMessage(event) {
+    alert(event.target.nodeName);
+    event.stopPropagation();
+}
+```
 
 
 

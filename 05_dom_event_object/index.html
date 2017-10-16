@@ -13,11 +13,19 @@
     <script>
         // html事件
         function showMessage(event) {
-            alert(event.type);
+            alert(event.target.nodeName);
+            event.stopPropagation();
+        }
+
+        function showBox(){
+            alert('这是放按钮的盒子');
         }
 
         // dom 0级事件
         var btn2 = document.getElementById('btn2');
+        var btn3 = document.getElementById('btn3');
+        var box = document.getElementById('box');
+
         btn2.onclick = function() {
             alert('这是通过DOM 0级添加的事件');
         }
@@ -47,9 +55,10 @@
             }
         }
 
-        var btn3 = document.getElementById('btn3');
         eventUtil.addHandler(btn3, 'click', showMessage);
         // eventUtil.removeHandler(btn3, 'click', showMessage);
+
+        eventUtil.addHandler(box, 'click', showBox);
 
     </script>
 </body>
