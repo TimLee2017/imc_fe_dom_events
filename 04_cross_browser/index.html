@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML事件</title>
+</head>
+<body>
+    <div id="box">
+        <input type="button" value="按钮" id="btn" onclick="showMessage()">
+        <input type="button" value="按钮2" id="btn2">
+        <input type="button" value="按钮3" id="btn3">
+    </div>    
+    <script>
+        // html事件
+        function showMessage() {
+            alert('hello world!');
+        }
+
+        // dom 0级事件
+        var btn2 = document.getElementById('btn2');
+        btn2.onclick = function() {
+            alert('这是通过DOM 0级添加的事件');
+        }
+        btn2.onclick = null;    // 清空事件
+
+        // 跨浏览器事件处理 
+        var eventUtil = {
+            // 添加句柄
+            addHandler: function(element, type, handler){
+                if (element.addEventListener) {
+                    element.addEventListener(type, handler, false);
+                } else if (element.attachEvent) {
+                    element.attachEvent('on' + type, handler);
+                } else {
+                    element['on'+type] = handler;
+                }
+            },
+            // 删除句柄
+            removeHandler: function(element, type, handler){
+                if (element.removeEventListener) {
+                    element.removeEventListener(type, handler, false);
+                } else if (element.detachEvent) {
+                    element.detachEvent('on' + type, handler);
+                } else {
+                    element['on'+type] = null;
+                }
+            }
+        }
+
+        var btn3 = document.getElementById('btn3');
+        eventUtil.addHandler(btn3, 'click', showMessage);
+        eventUtil.removeHandler(btn3, 'click', showMessage);
+
+    </script>
+</body>
+</html>

@@ -42,7 +42,50 @@ DOM 2级事件接收三个参数：
 
 * DOM 0级兼容性好。IE 8 对 DOM 0级的兼容性不好。IE 要用 IE 自己的事件处理程序。
 
-## 2.5 IE 事件处理程序
+### 2.5 IE 事件处理程序
+* attachEvent()
+* detachEvent()
+
+IE 8以及之前版本，只支持事件冒泡。
+
+### 2.6 跨浏览器的事件处理程序
+
+使用**“能力检测”**。
+
+tips: 
+0级事件：
+`element.onclick === element['onclick'] === element['on'+'click']`
+
+使用封装
+```
+// 跨浏览器事件处理 
+var eventUtil = {
+    // 添加句柄
+    addHandler: function(element, type, handler){
+        if (element.addEventListener) {
+            element.addEventListener(type, handler, false);
+        } else if (element.attachEvent) {
+            element.attachEvent('on' + type, handler);
+        } else {
+            element['on'+type] = handler;
+        }
+    },
+    // 删除句柄
+    removeHandler: function(element, type, handler){
+        if (element.removeEventListener) {
+            element.removeEventListener(type, handler, false);
+        } else if (element.detachEvent) {
+            element.detachEvent('on' + type, handler);
+        } else {
+            element['on'+type] = null;
+        }
+    }
+}
+
+var btn3 = document.getElementById('btn3');
+eventUtil.addHandler(btn3, 'click', showMessage);
+
+```
 
 
 
