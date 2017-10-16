@@ -57,7 +57,7 @@ tips:
 `element.onclick === element['onclick'] === element['on'+'click']`
 
 使用封装
-```
+```JavaScript
 // 跨浏览器事件处理 
 var eventUtil = {
     // 添加句柄
@@ -86,6 +86,30 @@ var btn3 = document.getElementById('btn3');
 eventUtil.addHandler(btn3, 'click', showMessage);
 
 ```
+
+
+## 3. 事件对象
+
+在触发DOM上的事件是都会产生一个对象。
+
+**事件对象event**
+
+### 3.1 DOM中的事件对象
+
+#### type属性
+
+用于获取事件类型
+
+```JavaScript
+function showMessage(event) {
+    alert(event.type);
+}
+```
+点击可以显示 `click`
+
+#### target属性
+用于获取事件目标
+
 
 
 
