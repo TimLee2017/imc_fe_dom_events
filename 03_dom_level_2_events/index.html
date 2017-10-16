@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML事件</title>
+</head>
+<body>
+    <div id="box">
+        <input type="button" value="按钮" id="btn" onclick="showMessage()">
+        <input type="button" value="按钮2" id="btn2">
+        <input type="button" value="按钮3" id="btn3">
+    </div>    
+    <script>
+        // html事件
+        function showMessage() {
+            alert('hello world!');
+        }
+
+        // dom 0级事件
+        var btn2 = document.getElementById('btn2');
+        btn2.onclick = function() {
+            alert('这是通过DOM 0级添加的事件');
+        }
+        btn2.onclick = null;    // 清空事件
+
+        // dom 2级事件
+        var btn3 = document.getElementById('btn3');
+        btn3.addEventListener('click', showMessage, false);
+        btn3.addEventListener('click', function() {
+            alert(this.value);
+        }, false);
+
+        // 删除事件
+        // btn3.removeEventListener('click', showMessage, false);
+
+    </script>
+</body>
+</html>
